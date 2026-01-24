@@ -1,14 +1,32 @@
--- Options are automatically loaded before lazy.nvim startup
--- Default options that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/options.lua
--- Add any additional options here
+local home = vim.fn.expand("~") -- Gets "/home/vegard" or "/Users/vegard"
 
--- Set the Python provider to your dedicated environment
-vim.g.python3_host_prog = "/home/vegard/.local/share/mamba/envs/nvim-sys/bin/python"
+-- 1. Determine the Mamba/Micromamba location based on OS
+local mamba_root
+if jit.os == "Linux" then
+  -- Your specific Linux path
+  mamba_root = home .. "/.local/share/mamba"
+elseif jit.os == "OSX" then
+  -- The standard Mac path for Micromamba (VERIFY THIS on your Mac!)
+  mamba_root = home .. "/micromamba"
+else
+  mamba_root = home .. "/micromamba"
+end
 
--- Help Jupyter/Molten find kernels and paths
-vim.env.JUPYTER_PATH = "/home/vegard/.local/share/jupyter:/home/vegard/.local/share/mamba/envs/nvim-sys/share/jupyter"
-vim.env.JUPYTER_DATA_DIR = "/home/vegard/.local/share/jupyter"
-vim.env.PATH = "/home/vegard/.local/share/mamba/envs/nvim-sys/bin:" .. vim.env.PATH
+-- 2. Construct the path to your 'nvim-sys' environment
+-- This results in: .../envs/nvim-sys/bin/python
+local python_bin = mamba_root .. "/envs/nvim-sys/bin/python"
 
--- Set spell languages to both English and Norwegian (Bokmål)
+-- 3. Set the Python provider
+vim.g.python3_host_prog = python_bin
+
+-- 4. Help Jupyter/Molten find kernels
+-- This ensures they look inside your nvim-sys environment
+vim.env.JUPYTER_PATH = home .. "/.local/share/jupyter:" .. mamba_root .. "/envs/nvim-sys/share/jupyter"
+vim.env.JUPYTER_DATA_DIR = home .. "/.local/share/jupyter"
+
+-- 5. Update system PATH for this session
+-- This lets Neovim run 'jupytext' or 'python' directly from your env
+vim.env.PATH = mamba_root .. "/envs/nvim-sys/bin:" .. vim.env.PATH
+
+-- 6. Spell settings
 vim.opt.spelllang = { "en", "nb" }

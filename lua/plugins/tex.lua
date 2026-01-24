@@ -2,13 +2,20 @@ return {
   {
     "lervag/vimtex",
     opts = function(_, opts)
-      -- Use Zathura as the viewer
-      vim.g.vimtex_view_method = "zathura"
-      -- Configure Tectonic as the compiler
+      -- 1. Configure Tectonic as the compiler (Works on both Mac & Linux)
       vim.g.vimtex_compiler_method = "tectonic"
-      -- Optional: Tectonic does not output the same log files as pdflatex.
-      -- If you find error parsing issues, you might need to adjust flags,
-      -- but the default usually works well for basic use.
+
+      -- 2. Detect OS and choose the correct viewer
+      if jit.os == "OSX" then
+        -- Mac: Use Skim
+        vim.g.vimtex_view_method = "skim"
+      elseif jit.os == "Linux" then
+        -- Linux: Use Zathura
+        vim.g.vimtex_view_method = "zathura"
+      else
+        -- Fallback for other systems (Windows, etc.)
+        vim.g.vimtex_view_method = "general"
+      end
     end,
   },
 }
