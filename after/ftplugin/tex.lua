@@ -1,4 +1,12 @@
--- LaTeX formatting shortcuts (gz prefix)
+-- Automatically trigger VimTeX's single-shot compile every time you save a .tex file
+vim.api.nvim_create_autocmd("BufWritePost", {
+  buffer = vim.api.nvim_get_current_buf(),
+  callback = function()
+    vim.cmd("silent! VimtexCompileSS")
+  end,
+  desc = "Auto-compile Tectonic on save (Silent)",
+})
+
 -- Normal mode: applies to word under cursor
 vim.keymap.set("n", "gzb", 'ciw\\textbf{<C-r>"}<Esc>', { desc = "LaTeX bold word", buffer = true })
 vim.keymap.set("n", "gzi", 'ciw\\emph{<C-r>"}<Esc>', { desc = "LaTeX emph word", buffer = true })

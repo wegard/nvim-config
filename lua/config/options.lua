@@ -30,3 +30,6 @@ vim.env.PATH = mamba_root .. "/envs/nvim-sys/bin:" .. vim.env.PATH
 
 -- 6. Spell settings
 vim.opt.spelllang = { "en", "nb" }
+
+-- 7. Stop VimTeX from auto-opening the error window for warnings
+vim.g.vimtex_quickfix_open_on_warning = 0
