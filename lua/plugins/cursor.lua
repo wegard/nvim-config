@@ -13,6 +13,7 @@ return {
       distance_stop_animating = 0.1,
       -- If you want the trail to be even more subtle,
       -- you can use the Gruvbox Gray: "#928374"
+      hide_target_cursor = true, -- This hides the "static" cursor while the smear is moving
     },
   },
 }
