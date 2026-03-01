@@ -33,3 +33,9 @@ vim.opt.spelllang = { "en", "nb" }
 
 -- 7. Stop VimTeX from auto-opening the error window for warnings
 vim.g.vimtex_quickfix_open_on_warning = 0
+
+-- 8. Faster updates and auto-checking for file changes (for Claude code)
+vim.o.updatetime = 100 -- faster CursorHold
+vim.api.nvim_create_autocmd({ "FocusGained", "BufEnter", "CursorHold", "CursorHoldI" }, {
+  command = "checktime",
+})
