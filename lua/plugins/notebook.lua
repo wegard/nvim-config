@@ -31,10 +31,10 @@ return {
             filetypes = { "markdown", "vimwiki", "quarto" },
           },
         },
-        max_width = 100,
-        max_height = 12,
+        max_width = 200,
+        max_height = 40,
         max_width_window_percentage = math.huge,
-        max_height_window_percentage = 50,
+        max_height_window_percentage = 70,
         window_overlap_clear_enabled = true,
         window_overlap_clear_ft_ignore = { "cmp_menu", "notify" },
       })
@@ -76,7 +76,7 @@ return {
     build = ":UpdateRemotePlugins",
     init = function()
       vim.g.molten_image_provider = "image.nvim"
-      vim.g.molten_output_win_max_height = 20
+      vim.g.molten_output_win_max_height = 40
       vim.g.molten_auto_open_output = true
       vim.g.molten_wrap_output = true
       vim.g.molten_virt_text_output = false
