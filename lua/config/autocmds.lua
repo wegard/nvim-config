@@ -6,3 +6,24 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+-- In your LazyVim config (e.g., lua/config/autocmds.lua)
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = "/tmp/zsh*",
+  callback = function()
+    vim.opt_local.filetype = "zsh"
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    -- Save and quit with one keystroke
+    vim.keymap.set("n", "<CR>", ":wq<CR>", { buffer = true, silent = true })
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufRead", {
+  pattern = { "*claude-prompt*", "*/.claude/*" },
+  callback = function()
+    vim.opt_local.filetype = "markdown"  -- prompts are markdown-ish
+    vim.opt_local.wrap = true
+    vim.opt_local.linebreak = true
+    vim.opt_local.spell = true            -- catch typos in prompts
+  end,
+})
